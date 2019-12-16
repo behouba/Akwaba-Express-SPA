@@ -1,6 +1,6 @@
 # Akwaba Express SPA (akwaba-express-spa)
 
-New single page application for Akwaba Express website
+New user interface for Akwaba Express website. Build as single page web application.
 
 ## Install the dependencies
 ```bash
