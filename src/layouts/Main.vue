@@ -12,7 +12,7 @@
 import DesktopHeader from "../components/DesktopHeader";
 import MobileHeader from "../components/MobileHeader";
 export default {
-  name: "MyLayout",
+  name: "Main",
   components: {
     DesktopHeader,
     MobileHeader
@@ -20,7 +20,7 @@ export default {
   data() {
     return {
       leftDrawerOpen: false,
-      userName: "Kouamé Manssé"
+      userName: ""
     };
   }
 };
