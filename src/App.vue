@@ -9,3 +9,8 @@ export default {
   name: "App"
 };
 </script>
+<style>
+a {
+  text-decoration: none !important;
+}
+</style>
