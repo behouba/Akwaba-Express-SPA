@@ -6,7 +6,11 @@ const routes = [
       { path: "", component: () => import("pages/Index.vue") },
       { path: "/services", component: () => import("pages/Services.vue") },
       { path: "/pricing", component: () => import("pages/Pricing.vue") },
-      { path: "/order", component: () => import("pages/Order.vue") },
+      {
+        path: "/order",
+        component: () => import("pages/Order.vue"),
+        props: { destination: false }
+      },
       { path: "/tracking", component: () => import("pages/Tracking.vue") },
       { path: "/about", component: () => import("pages/About.vue") },
       {

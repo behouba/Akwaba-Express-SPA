@@ -68,7 +68,7 @@
             <q-item-section>Nos services</q-item-section>
           </q-item>
 
-          <q-item clickable v-ripple to="/order">
+          <q-item clickable v-ripple to="/pricing">
             <q-item-section avatar>
               <q-icon name="inbox" />
             </q-item-section>

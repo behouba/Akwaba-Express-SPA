@@ -13,7 +13,7 @@
 
         <q-tabs>
           <q-route-tab to="/services" name="tab1" label="Nos services" />
-          <q-route-tab to="/order" name="tab2" label="Commande" />
+          <q-route-tab to="/pricing" name="tab2" label="Commande" />
           <q-route-tab to="/tracking" name="tab3" label="Suivi de colis" />
           <q-route-tab to="/about" name="tab4" label="À propos" />
         </q-tabs>
