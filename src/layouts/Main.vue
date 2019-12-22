@@ -1,7 +1,7 @@
 <template>
   <q-layout view="lHh Lpr lff">
-    <DesktopHeader v-if="$q.platform.is.desktop" :displayName="userName" />
-    <MobileHeader v-else-if="$q.platform.is.mobile" :displayName="userName" />
+    <DesktopHeader v-if="$q.screen.gt.sm" :displayName="userName" />
+    <MobileHeader v-else :displayName="userName" />
     <q-page-container>
       <router-view />
     </q-page-container>

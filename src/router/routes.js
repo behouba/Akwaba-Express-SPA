@@ -6,11 +6,6 @@ const routes = [
       { path: "", component: () => import("pages/Index.vue") },
       { path: "/services", component: () => import("pages/Services.vue") },
       { path: "/pricing", component: () => import("pages/Pricing.vue") },
-      {
-        path: "/order",
-        component: () => import("pages/Order.vue"),
-        props: { destination: false }
-      },
       { path: "/tracking", component: () => import("pages/Tracking.vue") },
       { path: "/about", component: () => import("pages/About.vue") },
       {
@@ -21,6 +16,15 @@ const routes = [
         path: "/privacy-policy",
         component: () => import("pages/PrivacyPolicy.vue")
       }
+    ]
+  },
+  {
+    path: "/order",
+    redirect: "/",
+    component: () => import("layouts/Main.vue"),
+    children: [
+      { path: "checkout", component: () => import("pages/Order.vue") },
+      { path: "success", component: () => import("pages/Success.vue") }
     ]
   },
   {

@@ -4,7 +4,10 @@
       <q-toolbar class="bg-black text-white">
         <q-toolbar-title style="flex:none">
           <router-link to="/">
-            <img class="q-py-sm" src="https://akwabaexpress.ci/assets/img/logo_trans-100.png" />
+            <img
+              class="q-py-sm"
+              src="https://akwabaexpress.ci/assets/img/logo_trans-100.png"
+            />
           </router-link>
         </q-toolbar-title>
 

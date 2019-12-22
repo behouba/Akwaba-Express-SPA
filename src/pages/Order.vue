@@ -101,6 +101,7 @@
               label="Valider la commande"
               class="q-mt-lg full-width"
               color="primary"
+              to="/order/success?id=1342523423"
             >
               <template v-slot:loading>
                 <q-spinner-facebook />

@@ -18,7 +18,7 @@
               inline-actions
               class="text-white bg-negative"
               >Nom d’utilisateur ou mot de passe incorrect
-            </q-banner> -->
+            </q-banner>-->
 
             <q-select
               outlined
@@ -33,12 +33,14 @@
               :options="places"
               @filter="filterFn"
             >
-              <template v-slot:prepend> <q-icon name="room" /> </template>
+              <template v-slot:prepend>
+                <q-icon name="room" />
+              </template>
               <template v-slot:no-option>
                 <q-item>
-                  <q-item-section class="text-grey">
-                    Aucun resultat
-                  </q-item-section>
+                  <q-item-section class="text-grey"
+                    >Aucun resultat</q-item-section
+                  >
                 </q-item>
               </template>
             </q-select>
@@ -55,12 +57,14 @@
               :options="places"
               @filter="filterFn"
             >
-              <template v-slot:prepend> <q-icon name="room" /> </template>
+              <template v-slot:prepend>
+                <q-icon name="room" />
+              </template>
               <template v-slot:no-option>
                 <q-item>
-                  <q-item-section class="text-grey">
-                    Aucun resultat
-                  </q-item-section>
+                  <q-item-section class="text-grey"
+                    >Aucun resultat</q-item-section
+                  >
                 </q-item>
               </template>
             </q-select>
@@ -81,11 +85,7 @@
               >
                 <q-card-section>
                   <div class="text-h6">Colis</div>
-                  <img
-                    src="~assets/icons/package.png"
-                    style="width:80px"
-                    alt=""
-                  />
+                  <img src="~assets/icons/package.png" style="width:80px" alt />
                 </q-card-section>
                 <q-card-section class="text-primary text-weight-bold">
                   <!-- 1,150 FCFA* -->
@@ -102,16 +102,12 @@
               >
                 <q-card-section>
                   <div class="text-h6">Documents</div>
-                  <img
-                    style="width:80px"
-                    src="~assets/icons/letter.png"
-                    alt=""
-                  />
+                  <img style="width:80px" src="~assets/icons/letter.png" alt />
                 </q-card-section>
 
-                <q-card-section class="text-primary text-weight-bold">
-                  1,150 FCFA*
-                </q-card-section>
+                <q-card-section class="text-primary text-weight-bold"
+                  >1,150 FCFA*</q-card-section
+                >
               </q-card>
             </div>
           </div>
@@ -134,7 +130,7 @@
                 <q-spinner-facebook />
               </template>
             </q-btn>
-          </div> -->
+          </div>-->
         </form>
       </div>
     </div>
@@ -176,7 +172,7 @@ export default {
     categorySelect(category) {
       if (this.hasPrices) {
         this.$router.push(
-          "/order?category=" +
+          "/order/checkout?category=" +
             category +
             "&origin=" +
             this.origin +

@@ -5,7 +5,7 @@
       <div class="text-center">
         <router-link to="/">
           <img
-            src="https://akwabaexpress.ci/assets/img/logo_red.png"
+            src="~/assets/icons/logo_red.png"
             style="width:200px"
             alt="Logo Akwaba Express"
           />
