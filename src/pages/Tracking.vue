@@ -30,7 +30,7 @@
               lazy-rules
               :rules="[
                 val =>
-                  (val.length > 0 && !isNaN(Number(val))) ||
+                  (val && !isNaN(Number(val))) ||
                   'Veuillez un numéro de suivi valide'
               ]"
             >
@@ -47,7 +47,7 @@
       </div>
       <div id="tracking" class="q-pa-md">
         <q-timeline v-if="tracking">
-          <div class="text-h4">{{ tracking.shipment.nature }}</div>
+          <div class="text-h4 q-pt-md">{{ tracking.shipment.nature }}</div>
           <q-separator class="q-my-sm" />
           <div class="q-mb-md">
             <div>Poids: {{ tracking.shipment.weight }} kg</div>
@@ -60,7 +60,7 @@
             v-for="event in tracking.events"
             v-bind:key="event.time"
             :title="event.title"
-            :subtitle="event.time"
+            :subtitle="event.timeFR"
             :icon="event.title == 'Échec de livraison' ? 'error' : 'done'"
             :color="
               event.title == 'Échec de livraison' ? 'negative' : 'positive'
@@ -159,12 +159,20 @@ export default {
         this.tracking = tracking;
         this.tracking.events.map(x => {
           var d = new Date(x.time);
-          x.time = d.toLocaleString("fr");
+          x.timeFR = d.toLocaleString("fr");
           return x;
         });
         this.fetching = false;
         this.scrollToElement(document.getElementById("tracking"));
       }, 3000);
+    }
+  },
+  created() {
+    this.id = this.$route.query.id;
+  },
+  mounted() {
+    if (this.id != null) {
+      this.fetchTracking();
     }
   }
 };
