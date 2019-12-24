@@ -5,69 +5,77 @@
       <q-separator class="q-my-xs" />
       <div>
         <form @submit.prevent.stop="updateData" class="q-py-md">
-          <div class="q-gutter-sm">
-            <q-input
-              dense
-              outlined
-              v-model="user.name"
-              label="Nom"
-              lazy-rules
-              :rules="[
-                val => (val && val.length > 0) || 'Veuillez saisir votre nom.'
-              ]"
-            />
+          <q-input
+            dense
+            outlined
+            v-model="user.name"
+            label="Nom"
+            lazy-rules
+            :rules="[
+              val => (val && val.length > 0) || 'Veuillez saisir votre nom.'
+            ]"
+          />
+          <q-input
+            outlined
+            dense
+            v-model="user.phone"
+            prefix="+225 "
+            ref="phone"
+            label="Téléphone"
+            mask="## ## ## ##"
+            lazy-rules
+            :rules="[
+              val =>
+                (val && val.length == 11) ||
+                'Veuillez saisir un numéro de téléphone valide'
+            ]"
+          />
 
-            <q-select
-              class="q-pb-sm"
-              outlined
-              dense
-              label="Adresse principale"
-              v-model="user.address"
-              use-input
-              hide-selected
-              fill-input
-              input-debounce="0"
-              :options="places"
-              @filter="filterFn"
-            >
-              <template v-slot:no-option>
-                <q-item>
-                  <q-item-section class="text-grey"
-                    >Aucun resultat</q-item-section
-                  >
-                </q-item>
-              </template>
-            </q-select>
+          <q-select
+            class="q-pb-sm"
+            outlined
+            dense
+            label="Adresse principale"
+            v-model="user.address"
+            use-input
+            hide-selected
+            fill-input
+            input-debounce="0"
+            :options="places"
+            @filter="filterFn"
+          >
+            <template v-slot:no-option>
+              <q-item>
+                <q-item-section class="text-grey"
+                  >Aucun resultat</q-item-section
+                >
+              </q-item>
+            </template>
+          </q-select>
+          <q-input
+            dense
+            outlined
+            v-model="user.email"
+            ref="email"
+            label="E-mail"
+            lazy-rules
+            :rules="[
+              val =>
+                (val && val.length > 0) ||
+                'Veuillez saisir une adresse e-mail valide'
+            ]"
+          />
 
-            <q-input
-              dense
-              outlined
-              v-model="user.email"
-              ref="email"
-              label="E-mail"
-              lazy-rules
-              :rules="[
-                val =>
-                  (val && val.length > 0) ||
-                  'Veuillez saisir une adresse e-mail valide'
-              ]"
-            />
-            <q-input
-              outlined
-              dense
-              v-model="user.phone"
-              prefix="+225 "
-              ref="phone"
-              label="Téléphone"
-              mask="## ## ## ##"
-              lazy-rules
-              :rules="[
-                val =>
-                  (val && val.length == 11) ||
-                  'Veuillez saisir un numéro de téléphone valide'
-              ]"
-            />
-          </div>
+          <q-checkbox
+            v-model="sendMailing"
+            label="Recevoir des notifications par e-mail"
+          />
+          <!-- <div>
+              <q-toggle
+                v-model="sendMailing"
+                label="Recevoir des notifications par e-mail"
+              />
+          </div>-->
           <q-separator></q-separator>
           <div class="q-py-sm">
             <router-link class="text-primary" to="/user/password"
@@ -107,6 +115,7 @@ export default {
   data() {
     return {
       places: [],
+      sendMailing: true,
       user: {
         name: "Kouamé manassé",
         address: "Cocody, riviera palmeraie",

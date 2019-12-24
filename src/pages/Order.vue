@@ -19,7 +19,7 @@
               outlined
               ref="senderName"
               v-model="sender.name"
-              label="Expéditeur (Nom et prénom)"
+              label="Nom"
               lazy-rules
               :rules="[
                 val =>
@@ -32,6 +32,7 @@
               outlined
               dense
               ref="senderPhone"
+              prefix="+225 "
               v-model="sender.phone"
               label="Téléphone"
               mask="## ## ## ##"
@@ -49,7 +50,7 @@
               outlined
               ref="recipientName"
               v-model="recipient.name"
-              label="Destinataire (Nom et prénom)"
+              label="Nom"
               lazy-rules
               :rules="[
                 val =>
@@ -61,6 +62,7 @@
               outlined
               dense
               ref="recipientPhone"
+              prefix="+225 "
               v-model="recipient.phone"
               label="Téléphone"
               mask="## ## ## ##"
