@@ -33,7 +33,8 @@ const routes = [
     component: () => import("layouts/Main.vue"),
     children: [
       { path: "orders", component: () => import("pages/Orders.vue") },
-      { path: "setting", component: () => import("pages/Setting.vue") }
+      { path: "setting", component: () => import("pages/Setting.vue") },
+      { path: "password", component: () => import("pages/Password.vue") }
     ]
   },
   {
@@ -48,8 +49,8 @@ const routes = [
       },
       { path: "recovery", component: () => import("pages/Recovery.vue") },
       {
-        path: "change-password",
-        component: () => import("pages/ChangePassword.vue")
+        path: "new-password",
+        component: () => import("pages/NewPassword.vue")
       }
     ]
   }

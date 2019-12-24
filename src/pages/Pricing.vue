@@ -187,8 +187,11 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .category-card:hover {
   cursor: pointer;
+}
+.q-select__dropdown-icon {
+  display: none !important;
 }
 </style>
