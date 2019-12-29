@@ -26,6 +26,7 @@
             dense
             outlined
             ref="email"
+            color="dark"
             v-model="email"
             label="Adresse e-mail"
             lazy-rules
@@ -40,6 +41,7 @@
             ref="password"
             dense
             outlined
+            color="dark"
             :type="isPwd ? 'password' : 'text'"
             v-model="password"
             lazy-rules

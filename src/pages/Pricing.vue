@@ -24,8 +24,10 @@
               outlined
               dense
               label="Départ"
+              :hide-dropdown-icon="true"
               v-model="origin"
               use-input
+              color="dark"
               clearable
               hide-selected
               fill-input
@@ -46,12 +48,14 @@
             </q-select>
             <q-select
               outlined
+              :hide-dropdown-icon="true"
               dense
               clearable
               label="Destination"
               v-model="destination"
               use-input
               hide-selected
+              color="dark"
               fill-input
               input-debounce="0"
               :options="places"
@@ -186,12 +190,3 @@ export default {
   }
 };
 </script>
-
-<style scoped>
-.category-card:hover {
-  cursor: pointer;
-}
-.q-select__dropdown-icon {
-  display: none !important;
-}
-</style>

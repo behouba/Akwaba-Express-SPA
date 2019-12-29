@@ -30,6 +30,7 @@
           >
           <q-input
             outlined
+            color="dark"
             dense
             ref="lastName"
             v-model="lastName"
@@ -44,6 +45,7 @@
           <q-input
             outlined
             dense
+            color="dark"
             ref="firstName"
             v-model="firstName"
             label="Prénom"
@@ -57,6 +59,7 @@
 
           <q-input
             outlined
+            color="dark"
             dense
             ref="email"
             v-model="email"
@@ -72,6 +75,7 @@
           <q-input
             outlined
             dense
+            color="dark"
             ref="phone"
             v-model="phone"
             label="Numéro de mobile"
@@ -87,6 +91,7 @@
             ref="password"
             outlined
             dense
+            color="dark"
             :type="isPwd ? 'password' : 'text'"
             v-model="password"
             lazy-rules

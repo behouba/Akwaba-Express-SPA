@@ -24,6 +24,7 @@
           >
           <q-input
             dense
+            color="dark"
             outlined
             ref="email"
             v-model="email"
