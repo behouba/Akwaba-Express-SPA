@@ -19,59 +19,8 @@
               class="text-white bg-negative"
               >Nom d’utilisateur ou mot de passe incorrect
             </q-banner>-->
-
-            <q-select
-              outlined
-              dense
-              label="Départ"
-              :hide-dropdown-icon="true"
-              v-model="origin"
-              use-input
-              color="dark"
-              clearable
-              hide-selected
-              fill-input
-              input-debounce="0"
-              :options="places"
-              @filter="filterFn"
-            >
-              <template v-slot:prepend>
-                <q-icon name="room" />
-              </template>
-              <template v-slot:no-option>
-                <q-item>
-                  <q-item-section class="text-grey"
-                    >Aucun resultat</q-item-section
-                  >
-                </q-item>
-              </template>
-            </q-select>
-            <q-select
-              outlined
-              :hide-dropdown-icon="true"
-              dense
-              clearable
-              label="Destination"
-              v-model="destination"
-              use-input
-              hide-selected
-              color="dark"
-              fill-input
-              input-debounce="0"
-              :options="places"
-              @filter="filterFn"
-            >
-              <template v-slot:prepend>
-                <q-icon name="room" />
-              </template>
-              <template v-slot:no-option>
-                <q-item>
-                  <q-item-section class="text-grey"
-                    >Aucun resultat</q-item-section
-                  >
-                </q-item>
-              </template>
-            </q-select>
+            <AddressSelect label="Départ" v-model="origin" />
+            <AddressSelect label="Destination" v-model="destination" />
           </div>
           <!--
       A button with v-model set to submit.
@@ -142,7 +91,9 @@
 </template>
 
 <script>
-const stringOptions = [
+import AddressSelect from "../components/AddressSelect";
+
+const addresses = [
   "Abidjan cocody",
   "Abidjan youpougon",
   "Abidjan Treichville",
@@ -151,6 +102,7 @@ const stringOptions = [
 ];
 export default {
   name: "Pricing",
+  components: { AddressSelect },
   data() {
     return {
       places: [],
@@ -161,19 +113,20 @@ export default {
   },
   methods: {
     filterFn(val, update, abort) {
-      if (val.length < 2) {
+      if (val.length < 1) {
         abort();
         return;
       }
 
       update(() => {
         const needle = val.toLowerCase();
-        this.places = stringOptions.filter(
+        this.places = addresses.filter(
           v => v.toLowerCase().indexOf(needle) > -1
         );
       });
     },
     categorySelect(category) {
+      // alert(this.origin, category);
       if (this.hasPrices) {
         this.$router.push(
           "/order/checkout?category=" +
@@ -185,7 +138,6 @@ export default {
         );
         return;
       }
-      alert("You selected category: " + category);
     }
   }
 };

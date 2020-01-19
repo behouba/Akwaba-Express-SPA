@@ -1,6 +1,6 @@
 <template>
   <q-page padding>
-    <div class="q-mx-auto q-my-lg" style="max-width:500px">
+    <div class="q-mx-auto q-my-lg" style="max-width:550px">
       <div class="text-h5 text-center">
         Livraison de {{ $route.query.category }} à
         {{ $route.query.destination }}
@@ -9,101 +9,111 @@
       <div>
         <form @submit.prevent.stop="order" class="q-py-md">
           <!-- a simple text field watching for the enter key release -->
-          <div>Expéditeur</div>
+          <div class="q-my-md">
+            <div>Expéditeur</div>
 
-          <q-separator class="q-my-xs" />
+            <q-separator class="q-my-xs" />
 
-          <div class="q-gutter-sm">
-            <q-input
-              dense
-              color="dark"
-              outlined
-              ref="senderName"
-              v-model="sender.name"
-              label="Nom"
-              lazy-rules
-              :rules="[
-                val =>
-                  (val && val.length > 0) ||
-                  'Veuillez saisir une adresse e-mail valide'
-              ]"
-            >
-              <template v-slot:append>
-                <q-btn
-                  round
-                  dense
-                  flat
-                  @click="senderDialog = true"
-                  icon="add"
-                ></q-btn>
-              </template>
-            </q-input>
-
-            <q-input
-              outlined
-              color="dark"
-              dense
-              ref="senderPhone"
-              prefix="+225 "
-              v-model="sender.phone"
-              label="Téléphone"
-              mask="## ## ## ##"
-              lazy-rules
-              :rules="[
-                val =>
-                  (val && val.length > 0) ||
-                  'Veuillez saisir une adresse e-mail valide'
-              ]"
-            />
-            <div>Destinataire</div>
-            <!-- <q-separator class="q-my-xs" /> -->
-            <q-input
-              dense
-              color="dark"
-              outlined
-              ref="recipientName"
-              v-model="recipient.name"
-              label="Nom"
-              lazy-rules
-              :rules="[
-                val =>
-                  (val && val.length > 0) ||
-                  'Veuillez saisir une adresse e-mail valide'
-              ]"
-            >
-              <template v-slot:append>
-                <q-btn
-                  round
-                  dense
-                  flat
-                  @click="recipientDialog = true"
-                  icon="add"
-                ></q-btn>
-              </template>
-            </q-input>
-            <q-input
-              outlined
-              dense
-              color="dark"
-              ref="recipientPhone"
-              prefix="+225 "
-              v-model="recipient.phone"
-              label="Téléphone"
-              mask="## ## ## ##"
-              lazy-rules
-              :rules="[
-                val =>
-                  (val && val.length > 0) ||
-                  'Veuillez saisir une adresse e-mail valide'
-              ]"
-            />
+            <div class="row q-col-gutter-md">
+              <name-input class="col-12 col-md-6" v-model="sender.name" />
+              <phone-input class="col-12 col-md-6" v-model="sender.phone" />
+            </div>
+            <div class="row q-qy-sm">
+              <address-select
+                label="Adresse"
+                v-model="sender.address"
+                class="col"
+              />
+            </div>
           </div>
 
-          <div>Sélectionnez votre mode paiement:</div>
+          <div id="shipments" class="row">
+            <q-card
+              class="col col-md-6"
+              flat
+              bordered
+              v-for="(i, s) in shipments"
+              :key="i"
+            >
+              <q-card-section>
+                <div class="text-overline text-orange-9">Overline</div>
+                <div class="text-h5 q-mt-sm q-mb-xs">Title {{ s.id }}</div>
+                <div class="text-caption text-grey">
+                  lasdflsdfsldf lsjfs jsdlfj sldjflk
+                </div>
+              </q-card-section>
+
+              <q-card-actions>
+                <q-btn flat color="dark" label="Share" />
+                <q-btn flat color="primary" label="Book" />
+
+                <q-space />
+              </q-card-actions>
+            </q-card>
+          </div>
+
+          <q-card class="q-pa-md" v-if="newShippingForm">
+            <div>Destinataire</div>
+            <q-separator class="q-my-xs" />
+            <div class="row q-col-gutter-md">
+              <name-input class="col-12 col-md-6" v-model="shipment.name" />
+              <phone-input class="col-12 col-md-6" v-model="shipment.phone" />
+            </div>
+            <div class="row">
+              <address-select
+                label="Adresse"
+                v-model="shipment.address"
+                class="col"
+              />
+            </div>
+            <div class="q-my-sm">
+              <div>Sélectionnez la catégorie</div>
+              <q-separator class="q-my-xs" />
+              <div class="row">
+                <q-option-group
+                  v-model="shipment.category"
+                  :options="categories"
+                  color="primary"
+                  inline
+                />
+              </div>
+            </div>
+            <div>
+              <div>Sélectionnez votre mode paiement:</div>
+              <q-separator class="q-my-xs" />
+              <div class="row">
+                <q-option-group
+                  v-model="shipment.paymentOption"
+                  :options="paymentOpts"
+                  color="primary"
+                  inline
+                />
+              </div>
+            </div>
+            <q-separator class="q-my-xs" />
+            <q-card-actions align="right">
+              <q-btn label="Annuler" @click="newShippingForm = false" />
+              <q-btn label="Ajouter" color="primary" />
+            </q-card-actions>
+          </q-card>
+
+          <div v-if="!newShippingForm">
+            <q-btn
+              label="+ Ajouter un colis"
+              no-caps
+              class="q-mt-lg full-width"
+              color="primary"
+              @click="newShippingForm = true"
+            >
+              <template v-slot:loading>
+                <q-spinner-facebook />
+              </template>
+            </q-btn>
+          </div>
+          <!-- <div>Sélectionnez votre mode paiement:</div>
           <q-separator class="q-mb-md" />
           <div class="q-gutter-md">
             <q-radio
-              dense
               color="dark"
               v-model="paymentOpt"
               val="pickup"
@@ -111,24 +121,19 @@
             />
             <q-radio
               color="dark"
-              dense
               v-model="paymentOpt"
               val="delivery"
               label="Paiement à la livraison"
             />
-          </div>
-          <!--
-      A button with v-model set to submit.
-      v-model scope variable must be a strict Boolean
-          -->
-          <!-- to="/order/success?id=1342523423" -->
+          </div>-->
 
           <div>
             <q-btn
               type="submit"
               label="Valider la commande"
+              no-caps
               class="q-mt-lg full-width"
-              color="primary"
+              color="positive"
             >
               <template v-slot:loading>
                 <q-spinner-facebook />
@@ -151,7 +156,6 @@
             <q-card-section>
               <q-select
                 outlined
-                dense
                 color="dark"
                 v-model="sender"
                 use-input
@@ -183,7 +187,6 @@
             <q-card-section>
               <q-select
                 outlined
-                dense
                 color="dark"
                 v-model="recipient"
                 use-input
@@ -212,6 +215,10 @@
 </template>
 
 <script>
+import AddressSelect from "../components/AddressSelect";
+import NameInput from "../components/NameInput";
+import PhoneInput from "../components/PhoneInput";
+
 const contacts = [
   { name: "Didier Attoubo", phone: "90893433" },
   { name: "Naturo Uzumaki", phone: "34253354" },
@@ -221,27 +228,51 @@ const contacts = [
   { name: "Client", phone: "23453425" }
 ];
 
-function Order(origin, destination, sender, recipient, pOption) {
+function Order(sender, shipments) {
   return {
-    origin,
-    destination,
     sender,
-    recipient,
-    pOption
+    shipments
   };
 }
 export default {
   name: "Order",
-  props: ["origin", "destination", "category"],
+  props: ["origin", "destination"],
+  components: {
+    AddressSelect,
+    NameInput,
+    PhoneInput
+  },
   data() {
     return {
       sender: {},
       recipient: {},
-      paymentOpt: "pickup",
+      shipment: {},
+      shipments: [{}, {}, {}],
+      newShippingForm: false,
       submitting: false,
       senderDialog: false,
       recipientDialog: false,
-      contactOptions: contacts
+      contactOptions: contacts,
+      categories: [
+        {
+          label: "Colis",
+          value: "parcel"
+        },
+        {
+          label: "Document",
+          value: "document"
+        }
+      ],
+      paymentOpts: [
+        {
+          label: "Au ramassage",
+          value: "pickup"
+        },
+        {
+          label: "À la livraison",
+          value: "delivery"
+        }
+      ]
     };
   },
   methods: {
@@ -250,15 +281,7 @@ export default {
       this.recipientDialog = false;
     },
     order() {
-      const origin = this.$route.query.origin;
-      const destination = this.$route.query.destination;
-      var order = new Order(
-        origin,
-        destination,
-        this.sender,
-        this.recipient,
-        this.paymentOpt
-      );
+      var order = new Order(this.sender, this.shipments);
       alert(`order : ${JSON.stringify(order)}`);
     },
     filterFn(val, update) {
@@ -285,6 +308,7 @@ export default {
   width: 100%;
   height: 50px;
   border-top: 1px solid lightgray;
+  background-color: white;
   text-align: center;
 }
 </style>
