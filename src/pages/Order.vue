@@ -10,11 +10,19 @@
         <form @submit.prevent.stop="order" class="q-py-md">
           <!-- a simple text field watching for the enter key release -->
           <div class="q-my-md">
-            <div>Expéditeur</div>
+            <div class="row">
+              Expéditeur
+              <q-space />
+              <div>
+                <a class="text-primary" @click="senderDialog = true"
+                  >À partir des contacts</a
+                >
+              </div>
+            </div>
 
             <q-separator class="q-my-xs" />
 
-            <div class="row q-col-gutter-md">
+            <div class="row q-col-gutter-xs">
               <name-input class="col-12 col-md-6" v-model="sender.name" />
               <phone-input class="col-12 col-md-6" v-model="sender.phone" />
             </div>
@@ -27,33 +35,16 @@
             </div>
           </div>
 
-          <div id="shipments" class="row">
-            <q-card
-              class="col col-md-6"
-              flat
-              bordered
-              v-for="(i, s) in shipments"
-              :key="i"
-            >
-              <q-card-section>
-                <div class="text-overline text-orange-9">Overline</div>
-                <div class="text-h5 q-mt-sm q-mb-xs">Title {{ s.id }}</div>
-                <div class="text-caption text-grey">
-                  lasdflsdfsldf lsjfs jsdlfj sldjflk
-                </div>
-              </q-card-section>
-
-              <q-card-actions>
-                <q-btn flat color="dark" label="Share" />
-                <q-btn flat color="primary" label="Book" />
-
-                <q-space />
-              </q-card-actions>
-            </q-card>
-          </div>
-
           <q-card class="q-pa-md" v-if="newShippingForm">
-            <div>Destinataire</div>
+            <div class="row">
+              Destinataire
+              <q-space />
+              <div>
+                <a class="text-primary" @click="recipientDialog = true"
+                  >À partir des contacts</a
+                >
+              </div>
+            </div>
             <q-separator class="q-my-xs" />
             <div class="row q-col-gutter-md">
               <name-input class="col-12 col-md-6" v-model="shipment.name" />
@@ -92,8 +83,13 @@
             </div>
             <q-separator class="q-my-xs" />
             <q-card-actions align="right">
-              <q-btn label="Annuler" @click="newShippingForm = false" />
-              <q-btn label="Ajouter" color="primary" />
+              <q-btn label="Annuler" no-caps @click="newShippingForm = false" />
+              <q-btn
+                label="Ajouter"
+                no-caps
+                color="primary"
+                @click="addShipment"
+              />
             </q-card-actions>
           </q-card>
 
@@ -101,8 +97,7 @@
             <q-btn
               label="+ Ajouter un colis"
               no-caps
-              class="q-mt-lg full-width"
-              color="primary"
+              class="q-mt-md full-width"
               @click="newShippingForm = true"
             >
               <template v-slot:loading>
@@ -110,24 +105,50 @@
               </template>
             </q-btn>
           </div>
-          <!-- <div>Sélectionnez votre mode paiement:</div>
-          <q-separator class="q-mb-md" />
-          <div class="q-gutter-md">
-            <q-radio
-              color="dark"
-              v-model="paymentOpt"
-              val="pickup"
-              label="Paiement au ramassage"
-            />
-            <q-radio
-              color="dark"
-              v-model="paymentOpt"
-              val="delivery"
-              label="Paiement à la livraison"
-            />
-          </div>-->
 
-          <div>
+          <div id="shipments" class="q-my-md">
+            <div>{{ shipments.length }} Colis</div>
+            <q-separator class="q-my-xs" />
+            <div class="row q-col-gutter-sm">
+              <div class="col-12 col-md-6" v-for="(s, i) in shipments" :key="i">
+                <q-card class="my-card" flat bordered>
+                  <q-item>
+                    <q-item-section avatar>
+                      <q-avatar square>
+                        <img
+                          v-if="s.category == 'document'"
+                          src="~/assets/icons/letter.png"
+                        />
+                        <img v-else src="~/assets/icons/package.png" />
+                      </q-avatar>
+                    </q-item-section>
+
+                    <q-item-section>
+                      <q-item-label>{{ s.name }}</q-item-label>
+                      <q-item-label caption>{{ s.address }}</q-item-label>
+                    </q-item-section>
+                  </q-item>
+                  <q-separator />
+
+                  <q-card-actions align="right">
+                    <q-btn flat round size="sm" icon="settings" />
+                    <q-btn
+                      flat
+                      round
+                      size="sm"
+                      icon="close"
+                      @click="removeShipment(i)"
+                    />
+                    <!-- <q-btn flat size="sm" no-caps color="primary"
+                      >Supprimer</q-btn
+                    >
+                    <q-btn flat size="sm" no-caps color="info">Modifier</q-btn>-->
+                  </q-card-actions>
+                </q-card>
+              </div>
+            </div>
+          </div>
+          <div v-if="shipments.length > 0">
             <q-btn
               type="submit"
               label="Valider la commande"
@@ -151,7 +172,10 @@
         >
           <q-card>
             <q-card-section>
-              <div class="text-h6">Contacts</div>
+              <q-card-section class="row items-center q-pb-none">
+                <q-space />
+                <q-btn icon="close" flat round dense v-close-popup />
+              </q-card-section>
             </q-card-section>
             <q-card-section>
               <q-select
@@ -181,14 +205,17 @@
           transition-hide="slide-down"
         >
           <q-card>
-            <q-card-section>
-              <div class="text-h6">Contacts</div>
+            <q-card-section class="row items-center q-pb-none">
+              <q-space />
+              <q-btn icon="close" flat round dense v-close-popup />
             </q-card-section>
             <q-card-section>
               <q-select
+                style="max-width: 500px"
+                class="q-mx-auto q-mt-md"
                 outlined
                 color="dark"
-                v-model="recipient"
+                v-model="shipment"
                 use-input
                 autofocus
                 hide-selected
@@ -220,18 +247,24 @@ import NameInput from "../components/NameInput";
 import PhoneInput from "../components/PhoneInput";
 
 const contacts = [
-  { name: "Didier Attoubo", phone: "90893433" },
-  { name: "Naturo Uzumaki", phone: "34253354" },
-  { name: "Shadow fox", phone: "52343453" },
-  { name: "Jumia ci", phone: "22345351" },
-  { name: "Pharmacie Bonheur", phone: "42342313" },
-  { name: "Client", phone: "23453425" }
+  { name: "Didier Attoubo", phone: "90893433", address: "Abidjan cocody" },
+  { name: "Naturo Uzumaki", phone: "34253354", address: "Abidjan treichville" },
+  { name: "Shadow fox", phone: "52343453", address: "Abidjan yopougon" },
+  { name: "Jumia ci", phone: "22345351", address: "Abidjan adjamé" },
+  { name: "Pharmacie Bonheur", phone: "42342313", address: "Abidjan marcory" },
+  { name: "Client", phone: "23453425", address: "Abidjan abobo" }
 ];
 
 function Order(sender, shipments) {
   return {
     sender,
     shipments
+  };
+}
+function Shipment() {
+  return {
+    category: "parcel",
+    paymentOption: "pickup"
   };
 }
 export default {
@@ -246,8 +279,8 @@ export default {
     return {
       sender: {},
       recipient: {},
-      shipment: {},
-      shipments: [{}, {}, {}],
+      shipment: Shipment(),
+      shipments: [],
       newShippingForm: false,
       submitting: false,
       senderDialog: false,
@@ -283,6 +316,15 @@ export default {
     order() {
       var order = new Order(this.sender, this.shipments);
       alert(`order : ${JSON.stringify(order)}`);
+    },
+    removeShipment(index) {
+      this.shipments.splice(index, 1);
+    },
+    addShipment() {
+      // alert(JSON.stringify(this.shipment));
+      this.shipments.push(this.shipment);
+      this.shipment = Shipment();
+      this.newShippingForm = false;
     },
     filterFn(val, update) {
       update(() => {
