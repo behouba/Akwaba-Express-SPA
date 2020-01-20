@@ -91,7 +91,7 @@
 </template>
 
 <script>
-import AddressSelect from "../components/AddressSelect";
+// import AddressSelect from "../components/AddressSelect";
 
 const addresses = [
   "Abidjan cocody",
@@ -102,7 +102,6 @@ const addresses = [
 ];
 export default {
   name: "Pricing",
-  components: { AddressSelect },
   data() {
     return {
       places: [],
