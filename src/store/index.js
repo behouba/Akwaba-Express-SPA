@@ -1,7 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 
-// import example from './module-example'
+import order from "./order.module";
 
 Vue.use(Vuex);
 
@@ -18,6 +18,7 @@ export default function(/* { ssrContext } */) {
   const Store = new Vuex.Store({
     modules: {
       // example
+      order
     },
 
     // enable strict mode (adds overhead!)

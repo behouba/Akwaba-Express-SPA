@@ -80,7 +80,10 @@ function getContacts() {
       name: "Very long contact name, it is very very long",
       phone: "23453425",
       address: "Abidjan abobo"
-    }
+    },
+    { name: "Harry", phone: "32234235", address: "Abidjan angré" },
+    { name: "Uchiwa", phone: "23453425", address: "Abidjan gare nord" },
+    { name: "Jean Luc", phone: "23453425", address: "Abidjan yopougon" }
   ];
 }
 
@@ -104,7 +107,7 @@ export default {
       );
     },
     selectContact(contact) {
-      this.$emit("contactSelected", contact);
+      this.$emit("input", contact);
     }
   }
 };

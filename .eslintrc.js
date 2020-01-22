@@ -33,6 +33,7 @@ module.exports = {
 
   // add your custom rules here
   rules: {
+    "no-console": 0,
     'prefer-promise-reject-errors': 'off',
 
     // allow debugger during development only
