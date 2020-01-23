@@ -34,7 +34,8 @@ const routes = [
     children: [
       { path: "orders", component: () => import("pages/Orders.vue") },
       { path: "setting", component: () => import("pages/Setting.vue") },
-      { path: "password", component: () => import("pages/Password.vue") }
+      { path: "password", component: () => import("pages/Password.vue") },
+      { path: "order", component: () => import("pages/OrderInfo.vue") }
     ]
   },
   {

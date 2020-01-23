@@ -19,55 +19,11 @@
         </q-input>
       </div>
       <q-infinite-scroll class="q-gutter-y-sm" @load="onLoad" :offset="250">
-        <q-card v-for="(order, index) in orders" :key="index">
-          <q-expansion-item
-            expand-separator
-            :icon="icons[0]"
-            label="Colis à Bonheur de couple"
-            caption="En Attente de confirmation"
-          >
-            <q-card class="my-card">
-              <q-separator />
-              <q-card-section class="text-body2 text-grey-8">
-                <div>Commande Nº: 1324234242</div>
-                <div>Créée le: 10/12/2019</div>
-                <div>Nº de suivi: 3453245234</div>
-                <!-- <div>Expéditeur: Kouamé behouba manassé</div> -->
-                <div>Destinataire: Bonheur de couple</div>
-                <div>Destination: Abidjan, cocody riviera palmeraie</div>
-                <div>Catégorie: Colis</div>
-                <div>Distance: 12 km</div>
-                <div>Frais de livraison: 1,250 FCFA</div>
-                <div>Mode de paiement: Paiement à la livraison</div>
-                <div></div>
-              </q-card-section>
-              <q-separator />
-              <q-card-actions align="right">
-                <q-btn
-                  size="sm"
-                  icon="search"
-                  to="/tracking?id=324123423"
-                  color="info"
-                  >Suivre</q-btn
-                >
-                <q-btn
-                  size="sm"
-                  icon="close"
-                  @click="confirm = true"
-                  color="negative"
-                  >Annuler</q-btn
-                >
-                <q-btn
-                  size="sm"
-                  icon="close"
-                  @click="confirm = true"
-                  color="negative"
-                  >Supprimer</q-btn
-                >
-              </q-card-actions>
-            </q-card>
-          </q-expansion-item>
-        </q-card>
+        <order-info-card
+          v-for="(order, index) in orders"
+          :key="index"
+          :order="order"
+        />
 
         <q-dialog v-model="confirm" persistent>
           <q-card>
@@ -92,24 +48,38 @@
 </template>
 
 <script>
+import OrderInfoCard from "../components/OrderInfoCard";
+import { mockOrder } from "../store/mocks";
 export default {
   name: "Orders",
+  components: {
+    OrderInfoCard
+  },
   data() {
     return {
       confirm: false,
-      icons: ["hourglass_empty", "local_shipping", "close", "done"],
-      orders: [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}]
+      orders: []
     };
   },
   methods: {
     onLoad(index, done) {
       setTimeout(() => {
         if (this.orders) {
-          this.orders.push({}, {}, {}, {}, {}, {}, {});
+          this.fetchOrders(this.orders.length);
           done();
         }
       }, 2000);
+    },
+    fetchOrders(offset) {
+      const start = 1224234234 + offset;
+      const end = start + 15;
+      for (var id = start; id < end; id++) {
+        this.orders.push(mockOrder(id));
+      }
     }
+  },
+  created() {
+    this.fetchOrders(0);
   }
 };
 </script>

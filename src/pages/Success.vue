@@ -19,17 +19,14 @@
         confirmer votre commande.
       </div>
       <q-separator></q-separator>
-      <div style="max-width: 400px" class="q-mx-auto q-my-lg">
-        <div class="row">
-          <div class="col text-body1 text-left">Frais de livraison:</div>
-          <div class="col text-body1 text-right text-primary text-bold">
-            1,345 FCFA*
-          </div>
+      <div class="q-my-lg text-left">
+        <div>
+          <div class="text-body1">Nombre de colis: 6</div>
         </div>
-        <div class="row">
-          <div class="col text-body1 text-left">Mode de paiement:</div>
-          <div class="col text-body1 text-right text-bold">
-            Paiment à la livraison
+        <div>
+          <div class="text-body1">
+            Total à payer:
+            <span class="text-primary text-bold">13,523 FCFA</span>
           </div>
         </div>
       </div>

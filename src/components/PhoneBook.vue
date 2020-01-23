@@ -6,11 +6,10 @@
     <q-card-section>
       <q-input
         dense
-        v-model="contactQuery"
-        @input="fetchContacts"
+        v-model="query"
+        @input="fetchContacts(query)"
         outlined
         placeholder="Recherche de contact"
-        hint="Debouncing 500ms"
       >
         <template v-slot:append>
           <q-icon name="search" />
@@ -28,9 +27,10 @@
           v-for="contact in contacts"
           :key="contact.id"
           class="q-my-sm"
+          :data-contact="contact.id"
           clickable
           v-ripple
-          @click="selectContact(contact)"
+          @click="input(contact)"
         >
           <q-item-section avatar>
             <q-avatar
@@ -56,59 +56,26 @@
 </template>
 
 <script>
-function getContacts() {
-  return [
-    {
-      name: "Didier Attoubo",
-      phone: "90893433",
-      address: "Abidjan cocody"
-    },
-    {
-      name: "Naturo Uzumaki",
-      phone: "34253354",
-      address: "Abidjan treichville"
-    },
-    { name: "Shadow fox", phone: "52343453", address: "Abidjan yopougon" },
-    { name: "Jumia ci", phone: "22345351", address: "Abidjan adjamé" },
-    {
-      name: "Pharmacie Bonheur",
-      phone: "42342313",
-      address: "Abidjan marcory"
-    },
-    { name: "Client", phone: "23453425", address: "Abidjan abobo" },
-    {
-      name: "Very long contact name, it is very very long",
-      phone: "23453425",
-      address: "Abidjan abobo"
-    },
-    { name: "Harry", phone: "32234235", address: "Abidjan angré" },
-    { name: "Uchiwa", phone: "23453425", address: "Abidjan gare nord" },
-    { name: "Jean Luc", phone: "23453425", address: "Abidjan yopougon" }
-  ];
-}
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   name: "PhoneBook",
   data() {
     return {
-      contacts: getContacts(),
-      contactQuery: null
+      query: null
     };
   },
+  computed: {
+    ...mapGetters(["contacts"])
+  },
   methods: {
-    fetchContacts() {
-      const contacts = getContacts();
-      if (this.contactQuery.length < 1) {
-        this.contacts = contacts;
-        return;
-      }
-      this.contacts = contacts.filter(
-        v => v.name.toLowerCase().indexOf(this.contactQuery.toLowerCase()) > -1
-      );
-    },
-    selectContact(contact) {
+    ...mapActions(["fetchContacts"]),
+    input(contact) {
       this.$emit("input", contact);
     }
+  },
+  created() {
+    this.fetchContacts();
   }
 };
 </script>

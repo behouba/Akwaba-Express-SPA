@@ -62,14 +62,18 @@
           <div>{{ order.shipments.length }} Colis</div>
           <q-separator class="q-my-xs" />
           <div class="row q-col-gutter-sm">
-            <shipment-card
-              v-for="(s, i) in order.shipments"
+            <div
+              class="col-12 col-md-6"
               :key="i"
-              :shipment="s"
-              :removable="true"
-              @show="showShipment(i)"
-              @remove="order.removeShipment(i)"
-            ></shipment-card>
+              v-for="(s, i) in order.shipments"
+            >
+              <shipment-card
+                :shipment="s"
+                :removable="true"
+                @show="showShipment(i)"
+                @remove="order.removeShipment(i)"
+              />
+            </div>
           </div>
         </div>
         <div class="q-mt-lg" style="margin-bottom: 100px;">
@@ -146,6 +150,7 @@ export default Vue.extend({
   },
   methods: {
     setSender(contact) {
+      // this.order.sender = contact;
       this.order.setSender(contact);
       this.showContact = false;
     },

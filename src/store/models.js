@@ -1,13 +1,13 @@
 "use strict";
 
-const paymentOpt1Label = "Au ramassage";
-const paymentOpt2Label = "À la livraison";
-const paymentOpt1Id = 1;
-const paymentOpt2Id = 2;
-const category1Label = "Colis";
-const category2Label = "Document";
-const category1Id = 1;
-const category2Id = 2;
+export const PAYMENT_OPT1_LABEL = "Au ramassage";
+export const PAYMENT_OPT2_LABEL = "À la livraison";
+export const PAYMENT_OPT1_ID = 1;
+export const PAYMENT_OPT2_ID = 2;
+export const CATEGORY1_LABEL = "Colis";
+export const CATEGORY2_LABEL = "Document";
+export const CATEGORY1_ID = 1;
+export const CATEGORY2_ID = 2;
 
 class Option {
   constructor(value, label) {
@@ -16,12 +16,12 @@ class Option {
   }
 }
 const PaymentOptions = [
-  new Option(paymentOpt1Id, paymentOpt1Label),
-  new Option(paymentOpt2Id, paymentOpt2Label)
+  new Option(PAYMENT_OPT1_ID, PAYMENT_OPT1_LABEL),
+  new Option(PAYMENT_OPT2_ID, PAYMENT_OPT2_LABEL)
 ];
 const Categories = [
-  new Option(category1Id, category1Label),
-  new Option(category2Id, category2Label)
+  new Option(CATEGORY1_ID, CATEGORY1_LABEL),
+  new Option(CATEGORY2_ID, CATEGORY2_LABEL)
 ];
 
 class Contact {
@@ -37,8 +37,8 @@ class Contact {
 
 class Shipment {
   recipient = new Contact();
-  category = new Option(category1Id, null);
-  paymentOption = new Option(paymentOpt1Id, null);
+  category = new Option(CATEGORY1_ID, null);
+  paymentOption = new Option(PAYMENT_OPT1_ID, null);
   cost = 0;
   distance = 0;
 
@@ -64,6 +64,7 @@ class Shipment {
 }
 
 class Order {
+  id = null;
   sender = new Contact();
   shipments = new Array();
 
@@ -101,12 +102,12 @@ class Order {
 }
 
 let PaymentOptionsMap = new Map();
-PaymentOptionsMap[paymentOpt1Id] = paymentOpt1Label;
-PaymentOptionsMap[paymentOpt2Id] = paymentOpt2Label;
+PaymentOptionsMap[PAYMENT_OPT1_ID] = PAYMENT_OPT1_LABEL;
+PaymentOptionsMap[PAYMENT_OPT2_ID] = PAYMENT_OPT2_LABEL;
 
 let CategoriesMap = new Map();
-CategoriesMap[category1Id] = category1Label;
-CategoriesMap[category2Id] = category2Label;
+CategoriesMap[CATEGORY1_ID] = CATEGORY1_LABEL;
+CategoriesMap[CATEGORY2_ID] = CATEGORY2_LABEL;
 
 export {
   PaymentOptionsMap,

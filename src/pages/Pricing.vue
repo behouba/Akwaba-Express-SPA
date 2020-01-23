@@ -19,8 +19,8 @@
               class="text-white bg-negative"
               >Nom d’utilisateur ou mot de passe incorrect
             </q-banner>-->
-            <AddressSelect label="Départ" v-model="origin" />
-            <AddressSelect label="Destination" v-model="destination" />
+            <address-select label="Départ" v-model="origin" />
+            <address-select label="Destination" v-model="destination" />
           </div>
           <!--
       A button with v-model set to submit.
@@ -31,7 +31,7 @@
           <div class="row q-gutter-sm q-my-sm">
             <div class="col">
               <q-card
-                @click="categorySelect('colis')"
+                @click="categorySelect(category1Id)"
                 flat
                 bordered
                 class="category-card text-center"
@@ -48,7 +48,7 @@
             </div>
             <div class="col">
               <q-card
-                @click="categorySelect('documents')"
+                @click="categorySelect(category2Id)"
                 flat
                 bordered
                 class="category-card text-center"
@@ -91,52 +91,41 @@
 </template>
 
 <script>
-// import AddressSelect from "../components/AddressSelect";
+import AddressSelect from "../components/AddressSelect";
+import {
+  CATEGORY1_ID as category1Id,
+  CATEGORY2_ID as category2Id,
+  CategoriesMap as cMap
+} from "../store/models";
 
-const addresses = [
-  "Abidjan cocody",
-  "Abidjan youpougon",
-  "Abidjan Treichville",
-  "Abidjan Bingerville",
-  "Abidjan Adjamé"
-];
 export default {
   name: "Pricing",
+  components: {
+    AddressSelect
+  },
   data() {
     return {
-      places: [],
       origin: "",
       destination: "",
-      hasPrices: true
+      hasPrices: true,
+      category1Id,
+      category2Id
     };
   },
   methods: {
-    filterFn(val, update, abort) {
-      if (val.length < 1) {
-        abort();
-        return;
-      }
-
-      update(() => {
-        const needle = val.toLowerCase();
-        this.places = addresses.filter(
-          v => v.toLowerCase().indexOf(needle) > -1
-        );
-      });
-    },
-    categorySelect(category) {
-      // alert(this.origin, category);
-      if (this.hasPrices) {
-        this.$router.push(
-          "/order/checkout?category=" +
-            category +
-            "&origin=" +
-            this.origin +
-            "&destination=" +
-            this.destination
-        );
-        return;
-      }
+    categorySelect(id) {
+      console.log(this.origin, this.destination, cMap[id]);
+      // if (this.hasPrices) {
+      //   this.$router.push(
+      //     "/order/checkout?category=" +
+      //       category +
+      //       "&origin=" +
+      //       this.origin +
+      //       "&destination=" +
+      //       this.destination
+      //   );
+      //   return;
+      // }
     }
   }
 };

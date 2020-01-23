@@ -6,7 +6,7 @@
       :label="label"
       :hide-dropdown-icon="true"
       use-input
-      v-model="selectedAddr"
+      v-model="address"
       color="dark"
       clearable
       hide-selected
@@ -30,7 +30,7 @@
   </div>
 </template>
 
-<script lang="ts">
+<script>
 const serverAddresses = [
   "Abidjan cocody",
   "Abidjan youpougon",
@@ -74,7 +74,7 @@ export default Vue.extend({
     }
   },
   computed: {
-    selectedAddr: {
+    address: {
       get() {
         return this.value;
       },
