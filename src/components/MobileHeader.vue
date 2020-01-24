@@ -35,36 +35,12 @@
             <q-item-section>{{ displayName }}</q-item-section>
           </q-item>
           <q-separator />
-
-          <q-item clickable v-ripple to="/user/orders">
-            <q-item-section avatar>
-              <q-icon name="all_inbox" />
-            </q-item-section>
-
-            <q-item-section>Mes commandes</q-item-section>
-          </q-item>
-
-          <q-item clickable v-ripple to="/user/setting">
-            <q-item-section avatar>
-              <q-icon name="settings" />
-            </q-item-section>
-
-            <q-item-section>Réglages</q-item-section>
-          </q-item>
-
-          <q-item clickable v-ripple>
-            <q-item-section avatar>
-              <q-icon name="logout" />
-            </q-item-section>
-
-            <q-item-section>Déconnexion</q-item-section>
-          </q-item>
+          <account-menu />
           <q-separator />
           <q-item clickable v-ripple to="/services">
             <q-item-section avatar>
               <q-icon name="local_offer" />
             </q-item-section>
-
             <q-item-section>Nos services</q-item-section>
           </q-item>
 
@@ -101,9 +77,14 @@
 </template>
 
 <script>
+import AccountMenu from "./AccountMenu";
+
 export default {
   name: "MobileHeader",
   props: ["displayName"],
+  components: {
+    AccountMenu
+  },
   data() {
     return {
       drawerRight: false

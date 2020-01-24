@@ -1,117 +1,75 @@
 <template>
   <q-page padding>
-    <div class="q-mx-auto q-my-lg" style="max-width:500px">
-      <div class="text-h5 text-center">DONNÉES PERSONNELS</div>
-      <q-separator class="q-my-xs" />
-      <div>
-        <form @submit.prevent.stop="updateData" class="q-py-md">
-          <q-input
-            dense
-            outlined
-            v-model="user.name"
-            label="Nom"
-            lazy-rules
-            :rules="[
-              val => (val && val.length > 0) || 'Veuillez saisir votre nom.'
-            ]"
-          />
-          <q-input
-            outlined
-            dense
-            v-model="user.phone"
-            prefix="+225 "
-            ref="phone"
-            label="Téléphone"
-            mask="## ## ## ##"
-            lazy-rules
-            :rules="[
-              val =>
-                (val && val.length == 11) ||
-                'Veuillez saisir un numéro de téléphone valide'
-            ]"
-          />
-
-          <q-select
-            class="q-pb-sm"
-            outlined
-            dense
-            label="Adresse principale"
-            v-model="user.address"
-            use-input
-            hide-selected
-            fill-input
-            input-debounce="0"
-            :options="places"
-            @filter="filterFn"
+    <div class="text-h5">DONNÉES PERSONNELS</div>
+    <q-separator class="q-my-xs" />
+    <div>
+      <form
+        @submit.prevent.stop="updateData"
+        class="q-py-md"
+        style="max-width: 450px"
+      >
+        <name-input v-model="user.name" />
+        <phone-input v-model="user.phone" />
+        <address-select label="Adresse" v-model="user.address" />
+        <q-input
+          dense
+          outlined
+          v-model="user.email"
+          ref="email"
+          label="E-mail"
+          lazy-rules
+          :rules="[
+            val =>
+              (val && val.length > 0) ||
+              'Veuillez saisir une adresse e-mail valide'
+          ]"
+        />
+        <!-- <q-checkbox
+          v-model="sendMailing"
+          label="Recevoir des notifications par e-mail"
+        />-->
+        <q-toggle
+          v-model="sendMailing"
+          label="Recevoir des notifications par e-mail"
+        />
+        <q-separator></q-separator>
+        <div class="q-py-sm">
+          <router-link class="text-primary" to="/account/password"
+            >Modifier votre mot de passe</router-link
           >
-            <template v-slot:no-option>
-              <q-item>
-                <q-item-section class="text-grey"
-                  >Aucun resultat</q-item-section
-                >
-              </q-item>
+        </div>
+        <q-separator class="q-mb-sm" />
+        <div>
+          <q-btn
+            outline
+            type="submit"
+            :loading="submitting"
+            label="Enregistrer"
+            class="q-mt-sm"
+            color="primary"
+          >
+            <template v-slot:loading>
+              <q-spinner-facebook />
             </template>
-          </q-select>
-          <q-input
-            dense
-            outlined
-            v-model="user.email"
-            ref="email"
-            label="E-mail"
-            lazy-rules
-            :rules="[
-              val =>
-                (val && val.length > 0) ||
-                'Veuillez saisir une adresse e-mail valide'
-            ]"
-          />
-
-          <q-checkbox
-            v-model="sendMailing"
-            label="Recevoir des notifications par e-mail"
-          />
-          <!-- <div>
-              <q-toggle
-                v-model="sendMailing"
-                label="Recevoir des notifications par e-mail"
-              />
-          </div>-->
-          <q-separator></q-separator>
-          <div class="q-py-sm">
-            <router-link class="text-primary" to="/user/password"
-              >Modifier votre mot de passe</router-link
-            >
-          </div>
-
-          <div>
-            <q-btn
-              type="submit"
-              :loading="submitting"
-              label="Enregistrer les modificatons"
-              class="q-mt-sm full-width"
-              color="primary"
-            >
-              <template v-slot:loading>
-                <q-spinner-facebook />
-              </template>
-            </q-btn>
-          </div>
-        </form>
-      </div>
+          </q-btn>
+        </div>
+      </form>
     </div>
   </q-page>
 </template>
 
 <script>
-const stringOptions = [
-  "Abidjan cocody",
-  "Abidjan youpougon",
-  "Abidjan Treichville",
-  "Abidjan Bingerville",
-  "Abidjan Adjamé"
-];
+import NameInput from "../components/NameInput";
+import PhoneInput from "../components/PhoneInput";
+import AddressSelect from "../components/AddressSelect";
+
 export default {
   name: "Setting",
+  components: {
+    NameInput,
+    PhoneInput,
+    AddressSelect
+  },
   data() {
     return {
       places: [],
@@ -128,19 +86,6 @@ export default {
   methods: {
     updateData() {
       alert(JSON.stringify(this.user));
-    },
-    filterFn(val, update, abort) {
-      if (val.length < 2) {
-        abort();
-        return;
-      }
-
-      update(() => {
-        const needle = val.toLowerCase();
-        this.places = stringOptions.filter(
-          v => v.toLowerCase().indexOf(needle) > -1
-        );
-      });
     }
   }
 };

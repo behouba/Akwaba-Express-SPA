@@ -28,13 +28,20 @@ const routes = [
     ]
   },
   {
-    path: "/user",
+    path: "/account",
     redirect: "/",
-    component: () => import("layouts/Main.vue"),
+    component: () => import("layouts/Account.vue"),
     children: [
       { path: "orders", component: () => import("pages/Orders.vue") },
       { path: "setting", component: () => import("pages/Setting.vue") },
       { path: "password", component: () => import("pages/Password.vue") },
+      { path: "contacts", component: () => import("pages/Contacts.vue") }
+    ]
+  },
+  {
+    path: "/account",
+    component: () => import("layouts/Main.vue"),
+    children: [
       { path: "order", component: () => import("pages/OrderInfo.vue") }
     ]
   },

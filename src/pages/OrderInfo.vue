@@ -1,6 +1,6 @@
 <template>
   <q-page padding>
-    <div style="max-width: 1200px">
+    <div style="max-width: 1200px" class="q-mx-auto">
       <div class="row q-mt-lg">
         <div class="col-12 col-md-4 q-mb-md q-pr-md">
           <div class="text-h6">Commande № {{ order.id }}</div>

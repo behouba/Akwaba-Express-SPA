@@ -19,32 +19,7 @@
         </q-tabs>
         <q-space />
         <q-btn-dropdown v-if="displayName" :label="displayName">
-          <q-list>
-            <q-item clickable v-close-popup to="/user/orders">
-              <q-item-section avatar>
-                <q-avatar icon="all_inbox" />
-              </q-item-section>
-              <q-item-section>
-                <q-item-label>Mes commandes</q-item-label>
-              </q-item-section>
-            </q-item>
-            <q-item clickable v-close-popup to="/user/setting">
-              <q-item-section avatar>
-                <q-avatar icon="settings" />
-              </q-item-section>
-              <q-item-section>
-                <q-item-label>Réglages</q-item-label>
-              </q-item-section>
-            </q-item>
-            <q-item clickable v-close-popup>
-              <q-item-section avatar>
-                <q-avatar icon="logout" />
-              </q-item-section>
-              <q-item-section>
-                <q-item-label>Déconnexion</q-item-label>
-              </q-item-section>
-            </q-item>
-          </q-list>
+          <account-menu />
         </q-btn-dropdown>
         <q-btn v-else to="/auth/login" label="Connexion" outline color="red" />
       </q-toolbar>
@@ -53,9 +28,13 @@
 </template>
 
 <script>
+import AccountMenu from "./AccountMenu";
 export default {
   name: "DesktopHeader",
   props: ["displayName"],
+  components: {
+    AccountMenu
+  },
   data() {
     return {};
   }

@@ -36,7 +36,7 @@
           color="white"
           icon="info"
           no-caps
-          to="/user/orders"
+          to="/account/orders"
           text-color="black"
           label="Voir les détails"
         />

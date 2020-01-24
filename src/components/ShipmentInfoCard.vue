@@ -1,5 +1,5 @@
 <template>
-  <q-card style="width: 500px; max-width: 80vw;" class="q-pt-md">
+  <q-card style="width: 400px; max-width: 80vw;" class="q-pt-md">
     <q-card-section class="q-pt-none">
       <div>Destinataire: {{ shipment.recipient.name }}</div>
       <div>Téléphone: {{ shipment.recipient.phone }}</div>

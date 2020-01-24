@@ -20,20 +20,17 @@
             <q-separator class="q-my-xs" />
 
             <div class="row q-col-gutter-md">
-              <name-input
-                class="col-12 col-md-6"
-                v-model="order.sender.name"
-              ></name-input>
+              <name-input class="col-12 col-md-6" v-model="order.sender.name" />
               <phone-input
                 class="col-12 col-md-6"
                 v-model="order.sender.phone"
-              ></phone-input>
+              />
               <address-select
                 @input="senderAdresseInput"
                 class="col-12"
                 label="Adresse"
                 v-model="order.sender.address"
-              ></address-select>
+              />
             </div>
           </div>
         </q-form>
@@ -83,7 +80,8 @@
             label="Valider la commande"
             no-caps
             class="full-width"
-            color="positive"
+            outline
+            color="primary"
           >
             <template v-slot:loading>
               <q-spinner-facebook />
